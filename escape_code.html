@@ -1,0 +1,134 @@
+<style> /* some styles */
+	#L {
+		float: right
+	} 
+	#G {
+		width: 320px;
+		font-size: 26px;
+		float: left;
+	}
+	#G > z {
+		width: 30px;
+		height: 30px;
+		border: 1px solid #DDD;
+		float: left
+	}
+	body {
+		width: 25em;
+	}
+</style>
+
+<ol id=L></ol> <!-- scoreboard -->
+<center id=G> <!-- gameboard --> <!-- HTML4, there is no space for text-align: center; -->
+
+<script>
+	// there is no space for IIFE
+
+	// init
+	d=document;
+	t=this;
+	v=[];
+	S=[];
+	Y=X=a=p=m=l=0;Z=U='';
+		// X,Y - Player position
+		// a - 'for' loop helper
+		// v - enemies objects {x,y}
+		// S - scoreboard array
+		// m - moves counter
+		// l - game over? - false
+		// Z - scoreboard helper
+		// U - empty string
+
+		// F is a fake @param - 'var=F=>{}' is shorter than 'var=()=>{}'
+
+	for(;a<100;a++){ // create board
+		E=d.createElement('z'); // 'z' tag : )
+		E.id=a%10+U+parseInt(a/10); // set id
+		G.appendChild(E); // append
+	}
+
+	r=(x,y,e)=>{ //render @param e char on the (x,y) position
+		d.getElementById(x+U+y).innerHTML=e?e:U
+	};
+
+	R=F=>{ // render Enemies and Player
+		for(a=0;a<v.length;a++){
+			r(v[a].x,v[a].y,'+');
+		}
+		r(X,Y,'O');
+	};
+
+	c=F=>{ // create enemy function
+		v.push({x:9,y:9});
+	};
+
+	s=p=>{ // set the score on the bottom of the board
+		P.innerHTML=p
+	};
+
+	c(); // create enemy
+	R(); // render board
+
+	N=e=>{ // Player round
+		e=e.keyCode; // get the code of the press key
+		
+		p=parseInt(m*m*.2); // add points
+		s(p); // render points
+		
+		m++ % 8 || c(); // create Enemy after the 8 moves
+		
+		33==e&&9>X&&Y&&r(X++,Y--); // Move Player
+		34==e&&9>X&&9>Y&&r(X++,Y++);
+		35==e&&X&&9>Y&&r(X--,Y++);
+		36==e&&X&&Y&&r(X--,Y--);
+		37==e&&X&&r(X--,Y);
+		39==e&&9>X&&r(X++,Y);
+		38==e&&Y&&r(X,Y--);
+		40==e&&9>Y&&r(X,Y++);
+		
+		V=F=>{ // Vertical enemy move
+			Y<v[i].y&&r(v[i].x,v[i].y--);
+			Y>v[i].y&&r(v[i].x,v[i].y++);
+		};
+
+		H=F=>{ // Horizontal enemy move
+			X<v[i].x&&r(v[i].x--,v[i].y);
+			X>v[i].x&&r(v[i].x++,v[i].y);
+		};
+
+		for(i=0;i<v.length-1;i++) {
+			X!=v[i].x&&Y!=v[i].y?.5>Math.random()?V():H():(V(),H()); // enemies moves
+			if(X==v[i].x&&Y==v[i].y)l=1; // check state of the game
+		}
+
+		R(); // render the board
+
+		if(l){ // if player lose
+			r(X,Y,'X'); // render the X in a player position 
+			s(p+'<br>Koniec gry'); // render game over text
+			
+			S.push(p); // add score to the scoreboard
+			S.sort((a,b)=>{return b-a}); // sort scoreboard
+			S=S.slice(0,3); // get 3 top scores
+			S.map(z=>{Z+='<li>'+z}); // create <li> elements with scores
+			L.innerHTML=Z; // render scores in <ol> element
+			
+			t.onkeydown=()=>{ // overwrite onkeydown function
+				
+				v=[];Y=X=a=p=m=l=0;Z=U; // reset variables
+				for(;a<100;a++)G.children[a+1].innerHTML=U; // clear board
+				c(); // create enemy
+
+				s(p); // render points
+				R(); // render board
+
+				t.onkeydown=N; // game is ready
+			}
+		}
+	}
+
+	t.onkeydown=N; // add event listener to the window - game is ready
+
+</script>
+
+Pkt. <b id=P> 0 <!-- score -->
