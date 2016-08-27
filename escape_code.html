@@ -6,7 +6,7 @@
 
 	// init
 	t=this;
-	S=[];
+	S=[0,0];
 	O='O';
 	W=F=>{v=[];Y=X=a=p=m=l=0;Z=''};W();
 		// X,Y - Player position
@@ -20,11 +20,9 @@
 
 		// F is a fake @param - 'var=F=>{}' is shorter than 'var=()=>{}'
 
-	for(;a<100;a++){ // create board
-		E=document.createElement(O); // 'z' tag : )
-		E.id=O+a%10+~~(a/10); // set id
-		G.appendChild(E); // append
-	}
+	for(;a<100;) // create board
+		G.appendChild(document.createElement(O)).id=O+a%10+~~(a++/10);
+	
 
 	B=p=>t.onkeydown=p;
 
@@ -33,9 +31,9 @@
 	r=(x,y=Y++,e=Z)=>I(e,t[O+x+y]); //render @param e char on the (x,y) position
 
 	R=F=>{ // render Enemies and Player
-		for(a in v){
+		for(a in v)
 			r(v[a].x,v[a].y,'+');
-		}
+		
 		r(X,Y,O);
 		r(9,9,'+')
 	};
@@ -49,7 +47,7 @@
 			p=~~(m*m*.2) // add points
 		); // render points
 		
-		m++ % 8 || c(); // create Enemy after the 8 moves
+		m++%8||c(); // create Enemy after the 8 moves
 		
 		33==e&&9>X&&Y&&r(X++,Y--); // Move Player
 		34==e&&9>X&&9>Y&&r(X++);
@@ -60,14 +58,13 @@
 		38==e&&Y&&r(X,Y--);
 		40==e&&9>Y&&r(X);
 		
-		V=F=>Y<v[i].y&&r(v[i].x,v[i].y--)||Y>v[i].y&&r(v[i].x,v[i].y++); // Vertical enemy move
+		V=(y=v[i].y,x=v[i].x)=>Y<y&&r(x,v[i].y--)||Y>y&&r(x,v[i].y++); // Vertical enemy move
 
-		H=F=>X<v[i].x&&r(v[i].x--,v[i].y)||X>v[i].x&&r(v[i].x++,v[i].y); // Horizontal enemy move
-			
+		H=(x=v[i].x,y=v[i].y)=>X<x&&r(v[i].x--,y)||X>x&&r(v[i].x++,y); // Horizontal enemy move
 
 		for(i in v) {
 			X!=v[i].x&&Y!=v[i].y?.5>Math.random()?V():H():(V(),H()); // enemies moves
-			if(X==v[i].x&&Y==v[i].y)l=1; // check state of the game
+			if(X==v[i].x&&Y==v[i].y)l=1 // check state of the game
 		}
 
 		R(); // render the board
@@ -75,11 +72,13 @@
 		if(l){ // if player lose
 			r(X,Y,'X'); // render the X in a player position 
 			I(p+'<br>end'); // render game over text
-			
+
 			S.push(p); // add score to the scoreboard
-			S.sort((a,b)=>b-a) // sort scoreboard
-				.slice(0,3) // get 3 top scores
-				.map(z=>{Z+='<li>'+z}); // create <li> elements with scores
+
+			for(a in'aaa') // shorter than for(a=0;a<3;a++)
+				Z+='<li>'+S.sort((a,b)=>b-a)[a];
+					// create <li> elements with scores
+					// get 3 top scores
 
 			I(Z,L); // render scores in <ol> element
 			
@@ -87,7 +86,8 @@
 				
 				W(); // reset variables
 
-				while(a++<100)I(Z,G.children[a]); // clear board
+				for(x of G.children)
+					x.id&&I(Z,x); // clear board
 
 				I(p); // render points
 				R(); // render board
@@ -99,7 +99,7 @@
 
 	R(); // render board
 
-	B(N); // add event listener to the window - game is ready
+	B(N) // add event listener to the window - game is ready
 
 </script>
 
