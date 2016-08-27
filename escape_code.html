@@ -22,7 +22,7 @@
 
 	for(;a<100;a++){ // create board
 		E=document.createElement(O); // 'z' tag : )
-		E.id=O+a%10+parseInt(a/10); // set id
+		E.id=O+a%10+~~(a/10); // set id
 		G.appendChild(E); // append
 	}
 
@@ -44,9 +44,9 @@
 
 	N=e=>{ // Player round
 		e=e.which; // get the code of the press key
-		
+
 		I(
-			p=parseInt(m*m*.2) // add points
+			p=~~(m*m*.2) // add points
 		); // render points
 		
 		m++ % 8 || c(); // create Enemy after the 8 moves
