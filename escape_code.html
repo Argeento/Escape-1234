@@ -5,7 +5,6 @@
 	// there is no space for IIFE
 
 	// init
-	t=this;
 	S=[0,0];
 	O='O';
 	W=F=>{v=[];Y=X=a=p=m=l=0;Z=''};W();
@@ -22,18 +21,18 @@
 
 	for(;a<100;) // create board
 		G.appendChild(document.createElement(O)).id=O+a%10+~~(a++/10);
-	
 
-	B=p=>t.onkeydown=p;
+
+	B=p=>onkeydown=p;
 
 	I=(v,e=P)=>e.innerHTML=v; // set the string in the element
 
-	r=(x,y=Y++,e=Z)=>I(e,t[O+x+y]); //render @param e char on the (x,y) position
+	r=(x,y=Y++,e=Z)=>I(e,this[O+x+y]); //render @param e char on the (x,y) position
 
 	R=F=>{ // render Enemies and Player
 		for(a in v)
 			r(v[a].x,v[a].y,'+');
-		
+
 		r(X,Y,O);
 		r(9,9,'+')
 	};
@@ -46,9 +45,9 @@
 		I(
 			p=~~(m*m*.2) // add points
 		); // render points
-		
+
 		m++%8||c(); // create Enemy after the 8 moves
-		
+
 		33==e&&9>X&&Y&&r(X++,Y--); // Move Player
 		34==e&&9>X&&9>Y&&r(X++);
 		35==e&&X&&9>Y&&r(X--);
@@ -57,7 +56,7 @@
 		39==e&&9>X&&r(X++,Y);
 		38==e&&Y&&r(X,Y--);
 		40==e&&9>Y&&r(X);
-		
+
 		V=(y=v[i].y,x=v[i].x)=>Y<y&&r(x,v[i].y--)||Y>y&&r(x,v[i].y++); // Vertical enemy move
 
 		H=(x=v[i].x,y=v[i].y)=>X<x&&r(v[i].x--,y)||X>x&&r(v[i].x++,y); // Horizontal enemy move
@@ -70,7 +69,7 @@
 		R(); // render the board
 
 		if(l){ // if player lose
-			r(X,Y,'X'); // render the X in a player position 
+			r(X,Y,'X'); // render the X in a player position
 			I(p+'<br>end'); // render game over text
 
 			S.push(p); // add score to the scoreboard
@@ -81,9 +80,9 @@
 					// get 3 top scores
 
 			I(Z,L); // render scores in <ol> element
-			
+
 			B(F=>{ // overwrite onkeydown function
-				
+
 				W(); // reset variables
 
 				for(x of G.children)
