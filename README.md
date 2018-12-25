@@ -1,5 +1,5 @@
 # Escape1234
-Game project in 1234 bytes [ES6] - 1087/1234
+Game project in 1234 bytes [ES6] - 954/1234
 
 ## Browser support
 - Google Chrome 52+
