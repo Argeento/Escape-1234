@@ -16,3 +16,6 @@ How many times can you move?
 ## Controls
 - Numeric keypad (123456789)
 - NumLock must be **disabled**
+
+## Demo
+[https://codepen.io/Argeento/pen/XpyeBj](https://codepen.io/Argeento/pen/XpyeBj)
